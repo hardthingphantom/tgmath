@@ -1,4 +1,4 @@
-# TMath
+# TGMath
 by hardthingphantom
 
 This package is mostly for quality of life, reducing casts, conversions etc.
