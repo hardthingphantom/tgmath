@@ -23,11 +23,8 @@ class array:
 		self._values = values
 
 		if _type is None and len(self._values): self._type = type(self._values[0])
-		elif len(self._values): self._type = _type
+		elif _type is None: self._type = _type
 		else: raise AttributeError("Either values or a type must be specified.")
-
-		for v in self._values:
-			v = self._type(v)
 
 	def mean(self):
 		return sum(self._values) / len(self._values)
