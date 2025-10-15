@@ -33,3 +33,5 @@ SOFTWARE.
 from tgmath._trig import *
 from tgmath._vec import *
 from tgmath._func import *
+
+from tgmath._const import *

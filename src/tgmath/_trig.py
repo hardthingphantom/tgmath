@@ -11,18 +11,26 @@ Setting the angle mode will change the returned values from the functions.
 DEG2RAD = 3.14159 / 180
 RAD2DEG = 180 / 3.14159
 
+
+def _fnc(func, v, *args):
+	if type(v) is list:
+		return [func(vi, *args) for vi in v]
+	else:
+		return func(v, *args)
+
+
 def degrees(r):
 	'''
 	Converts 'r' from radians to degrees.
 	Equivilant to 'r * tmath.RAD2DEG'
 	'''
-	return r * RAD2DEG
+	return _fnc(lambda r: r * RAD2DEG, r)
 def radians(d):
 	'''
 	Converts 'd' from degrees to radians.
 	Equivilant to 'd * tmath.DEG2RAD'
 	'''
-	return d * DEG2RAD
+	return _fnc(lambda d: d * DEG2RAD, d)
 
 def set_angle_mode(angle_mode):
 	'''
@@ -36,33 +44,36 @@ def set_angle_mode(angle_mode):
 
 
 def sin(a):
-	a *= DEG2RAD if ANGLE_MODE else 1
-	return math.sin(a)
+	if ANGLE_MODE: a = radians(a)
+	return _fnc(math.sin, a)
 
 def cos(a):
-	a *= DEG2RAD if ANGLE_MODE else 1
-	return math.cos(a)
+	if ANGLE_MODE: a = radians(a)
+	return _fnc(math.cos, a)
 
 def tan(a):
-	a *= DEG2RAD if ANGLE_MODE else 1
-	return math.tan(a)
+	if ANGLE_MODE: a = radians(a)
+	return _fnc(math.tan, a)
 
 def asin(v):
-	a = math.asin(v)
-	a *= RAD2DEG if ANGLE_MODE else 1
+	a = _fnc(math.asin, v)
+	if ANGLE_MODE: a = degrees(a)
 	return a
 
 def acos(v):
-	a = math.acos(v)
-	a *= RAD2DEG if ANGLE_MODE else 1
+	a = _fnc(math.acos, v)
+	if ANGLE_MODE: a = degrees(a)
 	return a
 
 def atan(v):
-	a = math.atan(v)
-	a *= RAD2DEG if ANGLE_MODE else 1
+	a = _fnc(math.atan, v)
+	if ANGLE_MODE: a = degrees(a)
 	return a
 
 def atan2(y, x):
-	a = math.atan2(y, x)
-	a *= RAD2DEG if ANGLE_MODE else 1
+	if type(y) == type(x) == list and len(x) == len(y):
+		a = [math.atan2(y[i], x[i]) for i in range(len(x))]
+	else:
+		a = math.atan2(y, x)
+	if ANGLE_MODE: a = degrees(a)
 	return a
