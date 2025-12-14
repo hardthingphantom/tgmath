@@ -274,6 +274,42 @@ class mat:
 			return vec(*tuple(m[0]), size=m.h)
 
 
+	def determinant(m):
+		if m.w != m.h:
+			raise ValueError("det(m)> Width of matrix must equal height.")
+
+		if m.w == 1:
+			return m[0][0]
+		elif m.w == 2:
+			return m[0][0] * m[1][1] - m[1][0] * m[0][1]
+		else:
+			return sum([m[i][0] * m.cofactor(i, 0) for i in range(m.w)])
+
+
+	def cofactor(m, i, j):
+		return (-1)**(i+j) * m.remove_rowcolumn(i, j).determinant()
+
+	def adjugate(m):
+		a = mat([], m.w, m.h)
+		for i in range(m.w):
+			for j in range(m.h):
+				a[i][j] = m.cofactor(j, i)
+		return a
+
+	def inverse(m):
+		return m.adjugate() * (1 / m.determinant())
+
+	def remove_rowcolumn(m, i, j):
+		'''
+			Returns a matrix of 1 less width/height with column i and row j removed
+		'''
+		matrix = [[m.matrix[_i][_j] for _j in range(m.h)] for _i in range(m.w)]
+		del matrix[i]
+		for n in range(m.h - 1):
+			del matrix[n][j]
+		return mat(matrix, m.w-1, m.h-1)
+
+
 	@staticmethod
 	def identity(d:int) -> mat:
 		return mat([[1 if x==y else 0 for y in range(d)] for x in range(d)])

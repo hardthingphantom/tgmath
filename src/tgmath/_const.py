@@ -68,4 +68,4 @@ class PHYSICAL_CONSTANTS:
 
 
 
-physical_constants = phys = PHYSICAL_CONSTANTS()
+physical_constants = phys = ph = PHYSICAL_CONSTANTS()

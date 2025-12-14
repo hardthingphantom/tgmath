@@ -105,3 +105,17 @@ def sig_figs(v, figures):
 		v1 = float(f"{sv1}e{log10}")
 		if not in_decimal and log10 == "0": v1 = int(v1)
 		return v1
+
+
+
+def pow(v, x):
+	'''
+	Raises v to the power of x
+	'''
+	return _fnc(lambda vi: vi ** x, v)
+
+def sqrt(v):
+	'''
+	Returns the square root of v
+	'''
+	return pow(v, 0.5)
